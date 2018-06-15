@@ -1,0 +1,17 @@
+{
+  "name": "mudsim",
+  "version": "1.0.0",
+  "description": "A bike riding in mud simulator",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nuxt"
+  },
+  "dependencies": {
+    "d3": "^5.4.0",
+    "gsap": "^2.0.1",
+    "nuxt": "^1.4.1",
+    "pixi.js": "^4.8.1",
+    "popmotion": "^8.2.3"
+  }
+}
