@@ -6,9 +6,8 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
 
 module.exports = {
   plugins: [{ src: '~/plugins/pixi', ssr: false }],
-  modules: ['@nuxtjs/google-analytics'],
-  'google-analytics': {
-    id: 'UA-120939411-1'
-  },
+  modules: [
+    ['@nuxtjs/google-analytics', { id: 'UA-120939411-1' }]
+  ],
   ...routerBase
 };
