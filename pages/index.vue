@@ -224,6 +224,8 @@ export default {
       this.groundTiles.tilePosition.x -= vx;
     },
     restart() {
+      this.$ga.event('controls', 'restart');
+
       // réinitialise la boue
       this.mudContainer.removeChildren();
 
