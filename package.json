@@ -5,7 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nuxt"
+    "dev": "nuxt",
+    "generate": "DEPLOY_ENV=GH_PAGES nuxt generate",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "d3": "^5.4.0",
@@ -13,5 +15,8 @@
     "nuxt": "^1.4.1",
     "pixi.js": "^4.8.1",
     "popmotion": "^8.2.3"
+  },
+  "devDependencies": {
+    "push-dir": "^0.4.1"
   }
 }
