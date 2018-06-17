@@ -43,6 +43,7 @@ export default {
 
     window.addEventListener('resize', this.recalculateViewport);
     window.addEventListener('orientationchange', this.recalculateViewport);
+    window.addEventListener('click', () => { console.log('click'); });
   },
   destroyed() {
     console.log('Destroying pixi application ');
@@ -80,13 +81,15 @@ export default {
         autoResize: false, 
         antialias: true,
         transparent: false,
-        resolution: 1
+        resolution: 1,
+        clearBeforeRender: false
       });
       this.$refs.game.appendChild(this.pixiApp.view);
 
       this.pixiApp.renderer.backgroundColor = 0x888888; 
       console.log(this.pixiApp.renderer.plugins.interaction);
       this.pixiApp.renderer.plugins.interaction.autoPreventDefault = false;
+      this.pixiApp.renderer.view.style['touch-action'] = 'auto';
       this.pixiLoader = new this.$pixi.loaders.Loader();
 
       // load assets
@@ -190,7 +193,7 @@ export default {
       this.entranceTimeline.from(this.backWheel, 1.6, { x: -105, va: 0.1 }, 'backWheelEntrance');
       this.entranceTimeline.from(this.backWheel, 1.6, { y: 300, ease: Bounce.easeOut }, 'backWheelEntrance');
       this.entranceTimeline.add('frameEntrance', 1.4);
-      this.entranceTimeline.from(this.frame, 0.3, { y: -150, opacity: 0, ease: Linear.easeNone }, 'frameEntrance');
+      this.entranceTimeline.from(this.frame, 0.3, { y: -150, alpha: 0, ease: Linear.easeNone }, 'frameEntrance');
       this.entranceTimeline.from(this.frame, 0.3, { x: 600 }, 'frameEntrance');
     },
     entranceLoop(delta) {
@@ -240,7 +243,7 @@ export default {
             case 2: this.mudCount.onBike--; break;
           }
         }
-        else if(mud.x < -10 || mud.x > viewWidth + 10 || mud.y > viewHeight + 10) {
+        else if(mud.y > viewHeight + 10) {
           // console.log('removing mud due to out of screen');
           this.mudContainer.removeChild(mud);
           this.mudCount.flying--;
