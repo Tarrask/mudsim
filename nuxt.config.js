@@ -1,3 +1,6 @@
+
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
 const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   router: {
     base: '/mudsim/'
@@ -12,9 +15,14 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'A bike riding in mud simulator. It let you see the movement of mud droplets when the bike accelerate.' },
       { name: 'theme-color', content: '#37382a' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
+  },
+  css: [
+    '@/assets/styles/main.scss'
+  ],
+  build: {
+    plugins: [
+      new FaviconsWebpackPlugin('./art/wheel.svg')
     ]
   },
   plugins: [{ src: '~/plugins/pixi', ssr: false }],

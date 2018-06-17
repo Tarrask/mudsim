@@ -1,0 +1,8 @@
+@import './variables';
+
+.mudsim {
+  @include media-breakpoint-up(md) {
+    @include make-container();
+    @include make-container-max-widths();
+  }
+}

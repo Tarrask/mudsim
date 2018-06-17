@@ -1,16 +1,33 @@
 <template>
-<div>
-  <h1>A bike riding in mud simulator</h1>
-  <div id="controls">
-    <button @click="restart">Restart entrance</button>
-    <input type="range" min="0" max="100" v-model="speed">
-    <select v-model.number="mudType">
-      <option v-for="type in mudTypes" :value="type">{{ type.name }}</option>
-    </select>
+<div class="mudsim">
+  <div class="title">
+    <h1>A bike riding in mud simulator</h1>
+  </div>
+  <div class="controls-container">
+    <div class="controls">
+      <div class="col form-group">
+        <button class="btn btn-primary btn-block" @click="restart">Restart</button>
+      </div>
+      <div class="col form-group">
+        <label for="speedControl">Speed ({{ (speed/2).toFixed(0) }} km/h)</label>
+        <input class="form-control-range" id="speedControl" type="range" min="0" max="100" v-model="speed">
+      </div>
+      <div class="col form-group">
+        <label for="mudTypeSelect">Mud type</label>
+        <select class="form-control" id="mudTypeSelect" v-model.number="mudType">
+          <option v-for="type in mudTypes" :value="type">{{ type.name }}</option>
+        </select>
+      </div>
+    </div>
     <!-- {{ mudCount }} -->
   </div>
 
   <div class="game" ref="game"></div>
+  <!-- <div class="xl">xl</div>
+  <div class="lg">lg</div>
+  <div class="md">md</div>
+  <div class="sm">sm</div>
+  <div class="xs">xs</div> -->
 </div>
 </template>
 
@@ -20,7 +37,7 @@ import debounce from 'debounce';
 export default {
   data() {
     const mudTypes = [
-      { name: 'Brown mud', tint: 0x634100, cx: 0.001 }, 
+      { name: 'Brown mud', tint: 0x634100, cx: 0.001 },
       { name: 'Ocre mud', tint: 0xB88A00, cx: 0.002 }, 
       { name: 'Snow', tint: 0xffffff, cx: 0.004 }
     ];
@@ -309,8 +326,62 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "assets/styles/variables";
+@import "node_modules/bootstrap/scss/forms";
+
+.title {
+  background-color: lighten($primary, 00%);
+  color: $white;
+  padding: $navbar-padding-y $navbar-padding-x;
+  h1 {
+    margin: 0;
+  }
+}
+
+
+.controls-container {
+  border-left: $border-width solid $primary;
+  border-right: $border-width solid $primary;
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+
+  .controls {
+    @include make-row();
+    align-items: center;
+    padding-top: $form-group-margin-bottom;
+
+    .col {
+      @include make-col-ready();
+      @include make-col(12);
+      @include media-breakpoint-up(sm) {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+      }
+    }
+  }
+}
+
+
+
+.form-control-range {
+  height: $input-height;
+}
 .game {
   width: 100%;
+  border: 1px solid $primary;
+
+  canvas {
+    display: block;
+    width: 100%;
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  .#{$breakpoint} {
+    display: none;
+    @include media-breakpoint-only($breakpoint, $grid-breakpoints) { display: block; }
+  }
 }
 </style>

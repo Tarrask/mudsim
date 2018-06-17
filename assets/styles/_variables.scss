@@ -1,0 +1,21 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+$primary: #634100;
+$theme-colors: (
+  "primary": $primary
+);
+$theme-colors: map-remove($theme-colors, "secondary", "success", "danger", "warning", "info", "light", "dark");
+
+$body-bg: $gray-100;
+
+$container-max-widths: (
+  lg: 1024px + $grid-gutter-width + $border-width * 2,
+  xl: 1024px + $grid-gutter-width + $border-width * 2
+);
+
+
+
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/buttons";
