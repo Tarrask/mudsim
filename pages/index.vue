@@ -18,6 +18,12 @@
           <option v-for="type in mudTypes" :value="type">{{ type.name }}</option>
         </select>
       </div>
+      <div class="col form-group">
+        <label for="guardTypeSelect">Mudguard</label>
+        <select class="form-control" id="guardTypeSelect" v-model="guardType">
+          <option v-for="type in guardTypes" :value="type">{{ type.name }}</option>
+        </select>
+      </div>
     </div>
     <!-- {{ mudCount }} -->
   </div>
@@ -34,6 +40,11 @@
 <script>
 import debounce from 'debounce';
 
+const MUD_ON_WHEEL = 0;
+const MUD_FLYING = 1;
+const MUD_ON_FRAME = 2;
+const MUD_ON_GUARD = 3;
+
 export default {
   data() {
     const mudTypes = [
@@ -41,17 +52,29 @@ export default {
       { name: 'Ocre mud', tint: 0xB88A00, cx: 0.002 }, 
       { name: 'Snow', tint: 0xffffff, cx: 0.004 }
     ];
+    const guardTypes = [
+      { name: 'No mud guard', prefix: 'noguard' },
+      { name: 'Plastic fork guard', prefix: 'fork' },
+      //{ name: 'Neopren fork guard', prefix: 'neopren' },
+      //{ name: 'Big mud guard', prefix: 'big' }
+    ];
     return {
       speed: 10,
       mudTypes,
       mudType: mudTypes[0],
+      guardTypes,
+      guardType: guardTypes[0],
       screenWidth: 0,
       screenHeight: 0,
       mudCount: {
         onWheels: 0,
         flying: 0,
-        onBike: 0
-      }
+        onBike: 0,
+        onMudGard: 0
+      },
+      frameWidth: 0,
+      frameHeight: 0,
+      frameHeightOffset: 235
     };
   },
   mounted() {
@@ -74,6 +97,17 @@ export default {
     mudType(newVal) {
       console.log(newVal);
       TweenMax.to(this.dirtGroundSprites, 2, { colorProps: {tint: newVal.tint, format: 'number'}, ease:Linear.easeNone });
+    },
+    guardType(newVal) {
+      TweenMax.to(this.mudguard, 0.2, { alpha: 0, onComplete() {
+        this.mudguard.texture = this.pixiLoader.resources[newVal.prefix].texture;
+        TweenMax.to(this.mudguard, 0.2, { alpha: 1 });
+      }, onCompleteScope: this });
+
+      let muds = this.mudContainer.children.filter(c => c.state === MUD_ON_GUARD);
+      TweenMax.to(muds, 0.2, { alpha: 0, onComplete() {
+        muds.forEach(mud => this.mudContainer.removeChild(mud));
+      }, onCompleteScope: this });
     }
   },
   methods: {
@@ -110,9 +144,11 @@ export default {
       this.pixiLoader = new this.$pixi.loaders.Loader();
 
       // load assets
-      this.pixiLoader.add('wholeBike.jpg');
       this.pixiLoader.add('wheel', 'wheel.png');
       this.pixiLoader.add('frame', 'frame.png');
+      this.guardTypes.forEach(type => {
+        this.pixiLoader.add(type.prefix, `${type.prefix}.png`);
+      });
       this.pixiLoader.add('sky', 'sky@4x.jpg');
       this.pixiLoader.add('mud1', 'mud1.png');
       this.pixiLoader.add('dirtGround', 'dirtGround.png');
@@ -121,7 +157,6 @@ export default {
       this.$nextTick(() => {
         this.pixiLoader.load(this.setup);
         this.pixiLoader.on('progress', (loader) => {
-          console.log('loading (' + loader.progress + '%)');
           this.$nuxt.$loading.increase(loader.progress);
         });
         this.$nuxt.$loading.start();
@@ -131,11 +166,11 @@ export default {
       console.log('images loaded');
       this.$nuxt.$loading.finish();
       const { Sprite, particles: { ParticleContainer }, Container, Graphics, Polygon, extras: { TilingSprite } } = this.$pixi;
-      //const TilingSprite = this.$pixi.extras.TilingSprite;
       const app = this.pixiApp;
       const viewWidth = app.renderer.view.width, viewHeight = app.renderer.view.height;
       const resources = this.pixiLoader.resources;
-      //this.bike = new Sprite(resources['wholeBike.jpg'].texture);
+      this.frameWidth = resources['frame'].texture.width;
+      this.frameHeight = resources['frame'].texture.height;
 
       // initialise les Sprites necessaires au simulateur
       const sky = new Sprite(resources['sky'].texture);
@@ -153,17 +188,25 @@ export default {
 
       this.frame = new Sprite(resources['frame'].texture);
       this.frame.anchor.set(0.5, 0.5);
-      this.frame.position.set(viewWidth / 2, viewHeight - 235);
+      this.frame.position.set(viewWidth / 2, viewHeight - this.frameHeightOffset);
 
-      let points = [279.6, 49.9, 250.5, 68.5, 180, 210.8, 164, 226.8, 135.4, 223.7, 118, 208, 102, 145, 109.9, 109.1, 84.7, 27.6, 50.7, 12.2, 50, 9, 130.1, 8.6, 131.7, 12.6, 111.1, 12.2, 93.7, 26.4, 116, 96, 142.3, 97.3, 267.9, 25.2];
-      for(let i = 0, l = points.length; i < l; i+=2) {
-        points[i] += viewWidth / 2 - 180;
-        points[i+1] += viewHeight - 235 - 113;
-      }
+      this.mudguard = new Sprite(resources['noguard'].texture);
+      this.mudguard.anchor.set(0.5, 0.5);
+      this.mudguard.position.set(viewWidth / 2, viewHeight - this.frameHeightOffset);
+
+      // les shapes de collisions
+      let collisionSvg = require('!svg-inline-loader!~/static/collisions.svg');
+      this.frameHitArea = this.svgPathToPolygon(collisionSvg, 'frame');
+      this.guardTypes.forEach(type => {
+        type.hitArea = this.svgPathToPolygon(collisionSvg, `${type.prefix}-shape`);
+        type.hitLine = this.svgPathToLine(collisionSvg, `${type.prefix}-line`);
+      });
+      // >>>>>>>> TEMP 
       const graphics = new Graphics();
-      graphics.beginFill(0xFF3300);
-      graphics.drawShape(new Polygon(points));
-      this.frameHitArea = new Polygon(points);
+      graphics.beginFill(0x00FF00);
+      graphics.drawShape(this.frameHitArea);
+      graphics.alpha = 0.5;
+      // <<<<<<<< TEMP
 
       this.groundContainer = new Container();
       this.dirtGroundSprites = [];
@@ -185,10 +228,11 @@ export default {
       app.stage.addChild(sky);
       app.stage.addChild(this.frontWheel);
       app.stage.addChild(this.backWheel);
+      app.stage.addChild(this.mudguard);
       app.stage.addChild(this.frame);
       app.stage.addChild(this.mudContainer);
       app.stage.addChild(this.groundContainer);
-      // app.stage.addChild(graphics);
+      //app.stage.addChild(graphics);
 
       // démarre le jeu
       this.entranceSetup();
@@ -242,7 +286,7 @@ export default {
         mud.r = 102 + Math.random() * 2;
         mud.angle = (Math.PI / 2) + (Math.random() * 0.2 - 0.1);
         mud.born = app.ticker.lastTime;
-        mud.state = 0;
+        mud.state = MUD_ON_WHEEL;
         this.mudContainer.addChild(mud);
         this.mudCount.onWheels++;
       }
@@ -267,11 +311,11 @@ export default {
         }
         else {
           switch(mud.state) {
-            case 0:
+            case MUD_ON_WHEEL:
               mud.angle += va;
               mud.position.set(mud.cx + Math.cos(mud.angle) * mud.r, mud.cy + Math.sin(mud.angle) * mud.r);
               if(Math.random() * 200 < mud.r * va * va) {
-                mud.state = 1;
+                mud.state = MUD_FLYING;
                 this.mudCount.onWheels--;
                 this.mudCount.flying++;
 
@@ -279,7 +323,7 @@ export default {
                 mud.vy = va * mud.r * Math.cos(mud.angle);
               }
               break;
-            case 1:
+            case MUD_FLYING:
               let ax = mud.vx * mud.vx * mud.airCx;
               mud.vx += mud.vx > 0 ? -ax : ax;
               let ay = mud.vy * mud.vy * mud.airCx;
@@ -287,14 +331,35 @@ export default {
               mud.vy += 0.0981;
               mud.x += mud.vx - vx;
               mud.y += mud.vy;
+              // collision avec le pare-boue
+              
+              // collision avec le cadre
               if(this.frameHitArea.contains(mud.x, mud.y)) {
                 // console.log('mud hit frameHitArea');
-                mud.state = 2;
+                mud.state = MUD_ON_FRAME;
                 this.mudCount.flying--;
                 this.mudCount.onBike++;
               }
+              else if(this.guardType.hitArea.contains(mud.x, mud.y)) {
+                mud.state = MUD_ON_GUARD;
+                this.mudCount.flying--;
+                this.mudCount.onMudGard++;
+              }
+              else {
+                let colPoint = this.segmentIntersection(mud.x, mud.y, mud.x - (mud.vx - vx), mud.y - mud.vy,
+                ...this.guardType.hitLine);
+                // 252.266 + viewWidth / 2 - 180, 120.402 + viewHeight - 235 - 113, 335.96 + viewWidth / 2 - 180, 85.826 + viewHeight - 235 - 113);
+                if(colPoint) {
+                  mud.x = colPoint.x;
+                  mud.y = colPoint.y;
+                  mud.state = MUD_ON_GUARD;
+                  this.mudCount.flying--;
+                  this.mudCount.onMudGard++;
+                }
+              }
               break;
-            case 2:
+            case MUD_ON_FRAME:
+            case MUD_ON_GUARD:
               break;
           }
         }
@@ -321,6 +386,40 @@ export default {
 
       this.entranceSetup();
       this.play = this.entranceLoop;
+    },
+    svgPathToLine(svg, pathId) {
+      let el = document.createElement('div');
+      el.innerHTML = svg;
+      let lineString = el.querySelector('#' + pathId).getAttribute('d');
+      console.log(lineString);
+      let points = lineString.substring(1).split(/[L,]/).map(v => parseFloat(v));
+      console.log(points);
+      console.log(this.frameWidth, this.frameHeight);
+      for(let i = 0, l = points.length; i < l; i+=2) {
+        points[i] += this.pixiApp.renderer.view.width / 2 - 180;
+        points[i+1] += this.pixiApp.renderer.view.height - 235 - 113;
+      }
+      return points;
+    },
+    svgPathToPolygon(svg, pathId) {
+      let points = this.svgPathToLine(svg, pathId);
+      return new this.$pixi.Polygon(points);
+    },
+    segmentIntersection(ax, ay, bx, by, cx, cy, dx, dy) {
+      let t = 1 / ((bx - ax) * (dy - cy) - (by - ay) * (dx-cx));
+      let r = ((ay - cy) * (dx - cx) - (ax - cx) * (dy - cy)) * t;
+      let s = ((ay - cy) * (bx - ax) - (ax - cx) * (by - ay)) * t;
+      // console.log(r, s);
+
+      if(0 <= r && r <= 1 && 0 <= s && s <= 1) {
+        return {
+          x: ax + r * (bx - ax),
+          y: ay + r * (by - ay)
+        }
+      }
+      else {
+        return null;
+      }
     }
   }
 };

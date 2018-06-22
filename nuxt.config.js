@@ -32,7 +32,12 @@ module.exports = {
       debug: {
         sendHitTask: process.env.NODE_ENV === 'production'
       } 
-    }]
+    }],
+    /* ['@nuxtjs/pwa', {
+      icon: false,
+      manifest: false,
+      meta: false
+    }]*/
   ],
   ...routerBase
 };
