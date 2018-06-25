@@ -1,10 +1,9 @@
 
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const locale = require('locale');
 
 const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  router: {
-    base: '/mudsim/'
-  }
+  base: '/mudsim/'
 } : {}
 
 module.exports = {
@@ -25,7 +24,8 @@ module.exports = {
       new FaviconsWebpackPlugin('./art/wheel.svg')
     ]
   },
-  plugins: [{ src: '~/plugins/pixi', ssr: false }],
+  serverMiddleware: [ locale(['en', 'fr'], 'en') ],
+  plugins: [{ src: '~/plugins/pixi', ssr: false }, '~/plugins/i18n'],
   modules: [
     ['@nuxtjs/google-analytics', { 
       id: 'UA-120939411-1',
@@ -39,5 +39,8 @@ module.exports = {
       meta: false
     }]*/
   ],
-  ...routerBase
+  router: {
+    middleware: 'i18n',
+    ...routerBase
+  }
 };

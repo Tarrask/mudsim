@@ -1,25 +1,25 @@
 <template>
 <div class="mudsim">
   <div class="title">
-    <h1>A bike riding in mud simulator</h1>
-  </div>
+    <h1>{{ $t('title') }}</h1>
+  </div> 
   <div class="controls-container">
     <div class="controls">
       <div class="col form-group">
-        <button class="btn btn-primary btn-block" @click="restart">Restart</button>
+        <button class="btn btn-primary btn-block" @click="restart">{{ $t('restart') }}</button>
       </div>
       <div class="col form-group">
-        <label for="speedControl">Speed ({{ (speed/2).toFixed(0) }} km/h)</label>
+        <label for="speedControl">{{ $t('speed') }} ({{ (speed/2).toFixed(0) }} {{ $t('speedUnit') }})</label>
         <input class="form-control-range" id="speedControl" type="range" min="0" max="100" v-model="speed">
       </div>
       <div class="col form-group">
-        <label for="mudTypeSelect">Mud type</label>
+        <label for="mudTypeSelect">{{ $t('mudType') }}</label>
         <select class="form-control" id="mudTypeSelect" v-model.number="mudType">
-          <option v-for="type in mudTypes" :value="type">{{ type.name }}</option>
+          <option v-for="type in mudTypes" :value="type">{{ $t(`mudTypes.${type.name}`) }}</option>
         </select>
       </div>
       <div class="col form-group">
-        <label for="guardTypeSelect">Mudguard</label>
+        <label for="guardTypeSelect">{{ $t('mudguard') }}</label>
         <select class="form-control" id="guardTypeSelect" v-model="guardType">
           <option v-for="type in guardTypes" :value="type">{{ type.name }}</option>
         </select>
@@ -48,9 +48,9 @@ const MUD_ON_GUARD = 3;
 export default {
   data() {
     const mudTypes = [
-      { name: 'Brown mud', tint: 0x634100, cx: 0.001 },
-      { name: 'Ocre mud', tint: 0xB88A00, cx: 0.002 }, 
-      { name: 'Snow', tint: 0xffffff, cx: 0.004 }
+      { name: 'brown', tint: 0x634100, cx: 0.001 },
+      { name: 'ocre', tint: 0xB88A00, cx: 0.002 }, 
+      { name: 'snow', tint: 0xffffff, cx: 0.004 }
     ];
     const guardTypes = [
       { name: 'No mud guard', prefix: 'noguard' },

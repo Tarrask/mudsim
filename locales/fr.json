@@ -1,0 +1,19 @@
+{
+  "title": "Un simulateur de vélo roulant dans la boue",
+  "restart": "Redémarrer",
+  "speed": "Vitesse",
+  "speedUnit": "km/h",
+  "mudType": "Type de boue",
+  "mudTypes": {
+    "brown": "Boue brune",
+    "ocre": "Boue beige",
+    "snow": "Neige"
+  },
+  "mudguard": "Garde-boue",
+  "mudguards": {
+    "noguard": "Pas de garde-boue",
+    "fork": "Garde-boue en plastique pour fourche",
+    "noepren": "Garde-boue en neoprène",
+    "big": "Gros garde-boue"
+  }
+}

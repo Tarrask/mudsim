@@ -1,0 +1,19 @@
+{
+  "title": "A bike riding in mud simulator",
+  "restart": "Restart",
+  "speed": "Speed",
+  "speedUnit": "km/h",
+  "mudType": "Mud type",
+  "mudTypes": {
+    "brown": "Brown mud",
+    "ocre": "Ocre mud",
+    "snow": "Snow"
+  },
+  "mudguard": "Mud guard",
+  "mudguards": {
+    "noguard": "No mud guard",
+    "fork": "Plastic fork guard",
+    "noepren": "Neopren mud guard",
+    "big": "Big mud guard"
+  }
+}
