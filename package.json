@@ -18,9 +18,9 @@
     "gsap": "^2.0.1",
     "locale": "^0.1.0",
     "nuxt": "^1.4.1",
+    "nuxt-i18n": "^4.1.0",
     "pixi.js": "^4.8.1",
-    "svg-inline-loader": "^0.8.0",
-    "vue-i18n": "^8.0.0"
+    "svg-inline-loader": "^0.8.0"
   },
   "devDependencies": {
     "bootstrap": "^4.1.1",

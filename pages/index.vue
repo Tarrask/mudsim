@@ -391,10 +391,7 @@ export default {
       let el = document.createElement('div');
       el.innerHTML = svg;
       let lineString = el.querySelector('#' + pathId).getAttribute('d');
-      console.log(lineString);
       let points = lineString.substring(1).split(/[L,]/).map(v => parseFloat(v));
-      console.log(points);
-      console.log(this.frameWidth, this.frameHeight);
       for(let i = 0, l = points.length; i < l; i+=2) {
         points[i] += this.pixiApp.renderer.view.width / 2 - 180;
         points[i+1] += this.pixiApp.renderer.view.height - 235 - 113;
@@ -409,7 +406,6 @@ export default {
       let t = 1 / ((bx - ax) * (dy - cy) - (by - ay) * (dx-cx));
       let r = ((ay - cy) * (dx - cx) - (ax - cx) * (dy - cy)) * t;
       let s = ((ay - cy) * (bx - ax) - (ax - cx) * (by - ay)) * t;
-      // console.log(r, s);
 
       if(0 <= r && r <= 1 && 0 <= s && s <= 1) {
         return {

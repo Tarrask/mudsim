@@ -1,6 +1,6 @@
 
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const locale = require('locale');
+// const locale = require('locale');
 
 const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   base: '/mudsim/'
@@ -24,8 +24,8 @@ module.exports = {
       new FaviconsWebpackPlugin('./art/wheel.svg')
     ]
   },
-  serverMiddleware: [ locale(['en', 'fr'], 'en') ],
-  plugins: [{ src: '~/plugins/pixi', ssr: false }, '~/plugins/i18n'],
+  // serverMiddleware: [ locale(['en', 'fr'], 'en') ],
+  plugins: [{ src: '~/plugins/pixi', ssr: false }, ], //'~/plugins/i18n'],
   modules: [
     ['@nuxtjs/google-analytics', { 
       id: 'UA-120939411-1',
@@ -33,6 +33,21 @@ module.exports = {
         sendHitTask: process.env.NODE_ENV === 'production'
       } 
     }],
+    ['nuxt-i18n', {
+      locales: [
+        { code: 'en', iso: 'en' },
+        { code: 'fr', iso: 'fr' }
+      ],
+      defaultLocale: null, //'en',
+      strategy: 'prefix',
+      rootRedirect: 'en',
+      vueI18n: {
+        messages: {
+          en: require('./locales/en.json'),
+          fr: require('./locales/fr.json')
+        }
+      }
+    }]
     /* ['@nuxtjs/pwa', {
       icon: false,
       manifest: false,
@@ -40,7 +55,7 @@ module.exports = {
     }]*/
   ],
   router: {
-    middleware: 'i18n',
+    // middleware: 'i18n',
     ...routerBase
   }
 };
