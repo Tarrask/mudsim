@@ -1,7 +1,11 @@
 <template>
 <div class="mudsim">
-  <div class="title">
+  <div class="title form-inline">
     <h1>{{ $t('title') }}</h1>
+    <select @change="switchLocale" class="form-control">
+      <option v-for="locale in $i18n.locales" :value="locale.code" :selected="locale.code === 
+$i18n.locale">{{ locale.name }}</option>
+    </select>
   </div> 
   <div class="controls-container">
     <div class="controls">
@@ -46,6 +50,11 @@ const MUD_ON_FRAME = 2;
 const MUD_ON_GUARD = 3;
 
 export default {
+  head() {
+    return {
+      title: 'Mudsim - ' + this.$t('title')
+    };
+  },
   data() {
     const mudTypes = [
       { name: 'brown', tint: 0x634100, cx: 0.001 },
@@ -83,7 +92,7 @@ export default {
 
     window.addEventListener('resize', this.recalculateViewport);
     window.addEventListener('orientationchange', this.recalculateViewport);
-    window.addEventListener('click', () => { console.log('click'); });
+    // window.addEventListener('click', () => { console.log('click'); });
   },
   destroyed() {
     console.log('Destroying pixi application ');
@@ -111,6 +120,11 @@ export default {
     }
   },
   methods: {
+    switchLocale(e) {
+        this.$i18n.locale = e.target.value;
+//        this.$router.replace(this.switchLocalePath(e.target.value));
+        history.replaceState({}, e.target.value, this.switchLocalePath(e.target.value));
+    },
     recalculateViewport: debounce(() => {
       console.log('recalculating viewport dimensions:', window.innerWidth, window.innerHeight);
       this.screenWidth = window.innerWidth;
@@ -426,11 +440,17 @@ export default {
 @import "node_modules/bootstrap/scss/forms";
 
 .title {
+  display: flex;
+  justify-content: space-between;
   background-color: lighten($primary, 00%);
   color: $white;
   padding: $navbar-padding-y $navbar-padding-x;
   h1 {
     margin: 0;
+  }
+  select, select:focus {
+    color: $white;
+    background: transparent;
   }
 }
 

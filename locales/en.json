@@ -6,14 +6,14 @@
   "mudType": "Mud type",
   "mudTypes": {
     "brown": "Brown mud",
-    "ocre": "Ocre mud",
+    "ocre": "Ochre mud",
     "snow": "Snow"
   },
-  "mudguard": "Mud guard",
+  "mudguard": "Mudguard",
   "mudguards": {
-    "noguard": "No mud guard",
-    "fork": "Plastic fork guard",
-    "noepren": "Neopren mud guard",
-    "big": "Big mud guard"
+    "noguard": "No mudguard",
+    "fork": "Plastic fork mudguard",
+    "noepren": "Neopren mudguard",
+    "big": "Big mudguard"
   }
 }

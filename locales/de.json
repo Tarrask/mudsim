@@ -1,0 +1,19 @@
+{
+  "title": "Ein Simulator eines Fahrrades im Schlamm Reiten",
+  "restart": "Neustart",
+  "speed": "Geschwindigkeit",
+  "speedUnit": "km/h",
+  "mudType": "Schlammtyp",
+  "mudTypes": {
+    "brown": "Brauner Schlamm",
+    "ocre": "Ockerschlamm",
+    "snow": "Schnee"
+  },
+  "mudguard": "Schutzblech",
+  "mudguards": {
+    "noguard": "Kein Schutzblech",
+    "fork": "Kunststoff-Schutzblech",
+    "noepren": "Neopren Schutzblech",
+    "big": "großer Schutzblech"
+  }
+}

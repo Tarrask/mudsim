@@ -24,7 +24,6 @@ module.exports = {
       new FaviconsWebpackPlugin('./art/wheel.svg')
     ]
   },
-  // serverMiddleware: [ locale(['en', 'fr'], 'en') ],
   plugins: [{ src: '~/plugins/pixi', ssr: false }, ], //'~/plugins/i18n'],
   modules: [
     ['@nuxtjs/google-analytics', { 
@@ -35,16 +34,18 @@ module.exports = {
     }],
     ['nuxt-i18n', {
       locales: [
-        { code: 'en', iso: 'en' },
-        { code: 'fr', iso: 'fr' }
+        { code: 'en', iso: 'en', name: 'English' },
+        { code: 'fr', iso: 'fr', name: 'Français' },
+        { code: 'de', iso: 'de', name: 'Deutch' }
       ],
       defaultLocale: null, //'en',
-      strategy: 'prefix',
+      strategy: 'prefix', //'prefix_except_default',
       rootRedirect: 'en',
       vueI18n: {
         messages: {
           en: require('./locales/en.json'),
-          fr: require('./locales/fr.json')
+          fr: require('./locales/fr.json'),
+          de: require('./locales/de.json')
         }
       }
     }]
