@@ -123,7 +123,8 @@ export default {
     switchLocale(e) {
         this.$i18n.locale = e.target.value;
 //        this.$router.replace(this.switchLocalePath(e.target.value));
-        history.replaceState({}, e.target.value, this.switchLocalePath(e.target.value));
+        history.replaceState({}, e.target.value,
+this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
     },
     recalculateViewport: debounce(() => {
       console.log('recalculating viewport dimensions:', window.innerWidth, window.innerHeight);
