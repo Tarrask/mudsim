@@ -38,9 +38,9 @@ module.exports = {
         { code: 'fr', iso: 'fr', name: 'Français' },
         { code: 'de', iso: 'de', name: 'Deutch' }
       ],
-      defaultLocale: null, //'en',
-      strategy: 'prefix', //'prefix_except_default',
-      rootRedirect: 'en',
+      defaultLocale: 'en',
+      strategy: 'prefix_except_default',
+      rootRedirect: null,
       vueI18n: {
         messages: {
           en: require('./locales/en.json'),
