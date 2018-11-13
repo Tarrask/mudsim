@@ -3,10 +3,10 @@
   <div class="title form-inline">
     <h1>{{ $t('title') }}</h1>
     <select @change="switchLocale" class="form-control">
-      <option v-for="locale in $i18n.locales" :value="locale.code" :selected="locale.code === 
+      <option v-for="locale in $i18n.locales" :value="locale.code" :selected="locale.code ===
 $i18n.locale">{{ locale.name }}</option>
     </select>
-  </div> 
+  </div>
   <div class="controls-container">
     <div class="controls">
       <div class="col form-group">
@@ -58,12 +58,13 @@ export default {
   data() {
     const mudTypes = [
       { name: 'brown', tint: 0x634100, cx: 0.001 },
-      { name: 'ocre', tint: 0xB88A00, cx: 0.002 }, 
+      { name: 'ocre', tint: 0xB88A00, cx: 0.002 },
       { name: 'snow', tint: 0xffffff, cx: 0.004 }
     ];
     const guardTypes = [
       { name: 'No mud guard', prefix: 'noguard' },
       { name: 'Plastic fork guard', prefix: 'fork' },
+      { name: 'Motocross style', prefix: 'moto' }
       //{ name: 'Neopren fork guard', prefix: 'neopren' },
       //{ name: 'Big mud guard', prefix: 'big' }
     ];
@@ -141,10 +142,10 @@ this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
 
       utils.sayHello(type);
 
-      this.pixiApp = new Application({ 
-        width: 1024, 
+      this.pixiApp = new Application({
+        width: 1024,
         height: 576,
-        autoResize: false, 
+        autoResize: false,
         antialias: true,
         transparent: false,
         resolution: 1,
@@ -152,7 +153,7 @@ this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
       });
       this.$refs.game.appendChild(this.pixiApp.view);
 
-      this.pixiApp.renderer.backgroundColor = 0x888888; 
+      this.pixiApp.renderer.backgroundColor = 0x888888;
       console.log(this.pixiApp.renderer.plugins.interaction);
       this.pixiApp.renderer.plugins.interaction.autoPreventDefault = false;
       this.pixiApp.renderer.view.style['touch-action'] = 'auto';
@@ -216,7 +217,7 @@ this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
         type.hitArea = this.svgPathToPolygon(collisionSvg, `${type.prefix}-shape`);
         type.hitLine = this.svgPathToLine(collisionSvg, `${type.prefix}-line`);
       });
-      // >>>>>>>> TEMP 
+      // >>>>>>>> TEMP
       const graphics = new Graphics();
       graphics.beginFill(0x00FF00);
       graphics.drawShape(this.frameHitArea);
@@ -347,7 +348,7 @@ this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
               mud.x += mud.vx - vx;
               mud.y += mud.vy;
               // collision avec le pare-boue
-              
+
               // collision avec le cadre
               if(this.frameHitArea.contains(mud.x, mud.y)) {
                 // console.log('mud hit frameHitArea');
@@ -361,8 +362,15 @@ this.$router.options.base + this.switchLocalePath(e.target.value).substring(1));
                 this.mudCount.onMudGard++;
               }
               else {
-                let colPoint = this.segmentIntersection(mud.x, mud.y, mud.x - (mud.vx - vx), mud.y - mud.vy,
-                ...this.guardType.hitLine);
+                let colPoint;
+                let line = this.guardType.hitLine;
+                for(let i = 0; i < this.guardType.hitLine.length - 3; i += 2) {
+                  colPoint = this.segmentIntersection(mud.x, mud.y, mud.x - (mud.vx - vx), mud.y - mud.vy,
+                                  line[i], line[i+1], line[i+2], line[i+3]);
+                  if(colPoint) break;
+                }
+
+
                 // 252.266 + viewWidth / 2 - 180, 120.402 + viewHeight - 235 - 113, 335.96 + viewWidth / 2 - 180, 85.826 + viewHeight - 235 - 113);
                 if(colPoint) {
                   mud.x = colPoint.x;
