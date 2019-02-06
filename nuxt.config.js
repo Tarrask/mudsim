@@ -26,11 +26,11 @@ module.exports = {
   },
   plugins: [{ src: '~/plugins/pixi', ssr: false }, ], //'~/plugins/i18n'],
   modules: [
-    ['@nuxtjs/google-analytics', { 
+    ['@nuxtjs/google-analytics', {
       id: 'UA-120939411-1',
-      debug: {
-        sendHitTask: process.env.NODE_ENV === 'production'
-      } 
+      // debug: {
+      //   sendHitTask: process.env.NODE_ENV === 'production'
+      // } 
     }],
     ['nuxt-i18n', {
       locales: [
