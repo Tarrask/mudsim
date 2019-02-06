@@ -1,0 +1,210 @@
+/*!
+ * Vue.js v2.5.16
+ * (c) 2014-2018 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * VERSION: 2.0.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*!
+ * VERSION: 1.5.3
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*!
+ * VERSION: 0.3.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*! https://mths.be/punycode v1.4.1 by @mathias */
+
+/**
+ * isMobile.js v0.4.1
+ *
+ * A simple library to detect Apple phones and tablets,
+ * Android phones and tablets, other mobile devices (like blackberry, mini-opera and windows phone),
+ * and any kind of seven inch device, via user agent sniffing.
+ *
+ * @author: Kai Mallea (kmallea@gmail.com)
+ *
+ * @license: http://creativecommons.org/publicdomain/zero/1.0/
+ */
+
+/**
+ * isMobile.js v0.4.1
+ *
+ * A simple library to detect Apple phones and tablets,
+ * Android phones and tablets, other mobile devices (like blackberry, mini-opera and windows phone),
+ * and any kind of seven inch device, via user agent sniffing.
+ *
+ * @author: Kai Mallea (kmallea@gmail.com)
+ *
+ * @license: http://creativecommons.org/publicdomain/zero/1.0/
+ */
+
+/*!
+ * vue-i18n v7.8.1 
+ * (c) 2018 kazuya kawaguchi
+ * Released under the MIT License.
+ */
+
+/*!
+ * VERSION: 2.0.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ *
+ * @author: Jack Doyle, jack@greensock.com
+ */
+
+/*!
+ * VERSION: 1.16.0
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*!
+ * VERSION: 2.0.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*!
+ * @overview es6-promise - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.4+314e4831
+ */
+
+/*!
+ * VERSION: 2.0.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
+
+/*!
+ * JavaScript Cookie v2.2.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * VERSION: 0.6.1
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
+
+/**
+ * vue-meta v1.5.0
+ * (c) 2018 Declan de Wet & Atinux
+ * @license MIT
+ */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*!
+ * VERSION: 1.6.0
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*!
+ * VERSION: 1.3.8
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+
+/*!
+ * VERSION: 1.20.5
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
